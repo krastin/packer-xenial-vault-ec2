@@ -94,9 +94,9 @@ bundle exec kitchen destroy # destroy testing resource
 
 ## Consul
     $> NODE_NAME=consul01 \
-    ACCESS_KEY_ID=XXXXXXX \
-    SECRET_ACCESS_KEY=XXX \
-    CLUSTER=vault-consul-01
+    ACCESS_KEY_ID=XXXXXXXXX \
+    SECRET_ACCESS_KEY=XXXXX \
+    CLUSTER=vault-consul-01 \
     bash /home/vault/configure_consul.sh
 
 # Where is my Vault recovery key
@@ -104,7 +104,8 @@ You can find the Vault recovery key and the initial root token on the first Vaul
 */home/vault/recovery_key.txt*
 
 # To Do
-- [ ] add vault provisioning script
+- [ ] fine tune testing
 
 # Done
+- [x] add vault provisioning script
 - [x] build initial box
