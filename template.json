@@ -10,7 +10,7 @@
   "builders": [
     {
       "name": "eu-central-1",
-      "profile": "",
+      "profile": "hashi",
       "type": "amazon-ebs",
       "region": "eu-central-1",
       "source_ami_filter": {

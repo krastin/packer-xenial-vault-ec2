@@ -57,6 +57,10 @@ sleep 3s
 
 export VAULT_ADDR=http://127.0.0.1:8200
 export VAULT_SKIP_VERIFY=true
+vault status || {
+  echo Error: Cannot contact Vault!
+  exit 1
+}
 vault_initialized=$(vault status | grep Initialized | awk '{ print $NF }')
 if [ "$vault_initialized" == "false" ]
 then
