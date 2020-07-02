@@ -1,0 +1,55 @@
+{
+  "variables": {
+    "owner_name": "krastin",
+    "owner_email": "krastin@hashicorp.com",
+    "ssh_username": "ubuntu",
+    "ssh_password": "ubuntu",
+    "vault_version": "1.4.0",
+    "consul_version": "1.8.0"
+  },
+  "builders": [
+    {
+      "name": "eu-central-1",
+      "profile": "",
+      "type": "amazon-ebs",
+      "region": "eu-central-1",
+      "source_ami_filter": {
+        "filters": {
+        "name": "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*",
+        "root-device-type": "ebs"
+        },
+        "owners": ["099720109477"],
+        "most_recent": true
+      },
+      "instance_type": "t2.micro",
+      "ssh_username": "ubuntu",
+      "ami_name": "{{user `owner_name`}}-xenial-vault-{{user `vault_version` | clean_resource_name}}-{{isotime \"20060102150405\"}}",
+      "ami_regions": ["us-east-1","us-west-1","ca-central-1","eu-west-1","ap-northeast-1"],
+      "tags": {
+        "OS Version": "Ubuntu",
+        "Release": "Latest",
+	"Owner": "{{user `owner_email`}}",
+	"Purpose": "vault {{user `vault_version`}} node"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "scripts/configure_vault.sh",
+      "destination": "/tmp/configure_vault.sh"
+    },
+    {
+      "type": "file",
+      "source": "scripts/configure_consul.sh",
+      "destination": "/tmp/configure_consul.sh"
+    },
+    {
+      "execute_command": "{{.Vars}} sudo -E bash '{{.Path}}'",
+      "scripts": ["scripts/provision.sh","scripts/install_vault.sh","scripts/install_consul.sh"],
+      "type": "shell",
+      "environment_vars": ["VAULT_VERSION={{user `vault_version`}}",
+                           "CONSUL_VERSION={{user `consul_version`}}"]
+    }
+  ]
+}
