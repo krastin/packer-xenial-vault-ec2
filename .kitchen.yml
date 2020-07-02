@@ -1,0 +1,25 @@
+---
+driver:
+  name: ec2
+  shared_credentials_profile: hashi # my own profile name in ~/.aws/credentials
+  aws_ssh_key_id: krastin-key1 # my own aws ssh key name
+  region: eu-west-1
+  instance_type: t2.micro
+  associate_public_ip: true
+
+transport:
+  ssh_key: "~/.ssh/krastin-key1-hashi-euw1.pem" # my own ssh key file
+  username: ubuntu
+
+platforms:
+  - name: krastin-xenial-vault
+    driver:
+      image_search:
+        owner-id: "729476260648" # my own owner-id
+        name: krastin-xenial-vault-*
+
+verifier:
+  name: inspec
+
+suites:
+  - name: default
