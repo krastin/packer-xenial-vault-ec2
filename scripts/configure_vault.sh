@@ -3,6 +3,7 @@
 ##Variables
 # AWS_REGION
 # KMS_KEY
+# CONSUL_TOKEN
 
 sudo chown -R vault /etc/vault.d
 
@@ -13,6 +14,7 @@ ui = true
 storage "consul" {
   address = "127.0.0.1:8500"
   path    = "vault"
+  #token   = "${CONSUL_TOKEN}
 }
 
 listener "tcp" {
@@ -20,6 +22,11 @@ listener "tcp" {
   tls_disable = 1
 }
 EOF
+
+# If consul token was not empty, remove the comment as to use it
+if [ ! -z "$CONSUL_TOKEN" ]; then
+  sed -i 's/#token/token/' /etc/vault.d/vault.hcl
+fi
 
 # Get and configure the local IP
 local_ip=$(ip add | grep "inet " | grep -v '127.0.0.1' | awk '{ print $2 }' | awk -F'/' '{ print $1 }')
