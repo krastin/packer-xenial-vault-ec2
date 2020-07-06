@@ -70,7 +70,6 @@ then
   echo Vault is not initialized: init now...
   VAULT_ADDR=http://127.0.0.1:8200 VAULT_SKIP_VERIFY=true vault operator init -recovery-shares=1 -recovery-threshold=1 > ~/recovery_key.txt || {
     echo Error initializing Vault!
-    exit 1
   }
 elif [ "$vault_initialized" == "true" ]
 then
