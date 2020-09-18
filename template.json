@@ -4,7 +4,7 @@
     "owner_email": "krastin@hashicorp.com",
     "ssh_username": "ubuntu",
     "ssh_password": "ubuntu",
-    "vault_version": "1.4.0",
+    "vault_version": "1.4.0+ent",
     "consul_version": "1.8.0"
   },
   "builders": [

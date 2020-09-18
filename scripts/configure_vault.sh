@@ -85,7 +85,7 @@ then
   if [ ! -z "$VAULT_LICENSE" ]; then
     sleep 10s
     vault_token=$(cat ~/recovery_key.txt | grep 'Initial Root Token: ' | awk '{ print $NF }')
-    VAULT_TOKEN=$vault_token vault write sys/license text=${VAULT_LICENSE}
+    VAULT_ADDR=http://127.0.0.1:8200 VAULT_SKIP_VERIFY=true VAULT_TOKEN=$vault_token vault write sys/license text=${VAULT_LICENSE} || echo Failed to write license - probably another node did that already
   fi
 elif [ "$vault_initialized" == "true" ]
 then
